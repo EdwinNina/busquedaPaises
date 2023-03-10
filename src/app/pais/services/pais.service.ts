@@ -13,13 +13,40 @@ export class PaisService {
 
   constructor(private http: HttpClient) { }
 
+  private params = {
+    'access_key': this.apiKey,
+    'fields': 'name,capital,alpha2code,flag,population'
+  }
+
   buscarPais(termino: string): Observable<Country[]>{
     const url = `${this.apiUrl}/name/${termino}`
     return this.http.get<Country[]>(url,
       {
-        params: {
-          'access_key': this.apiKey
-        }
+        params: this.params
+      });
+  }
+
+  buscarCapital(termino: string): Observable<Country[]>{
+    const url = `${this.apiUrl}/capital/${termino}`
+    return this.http.get<Country[]>(url,
+      {
+        params: this.params
+      });
+  }
+
+  buscarCodigo(termino: string): Observable<Country>{
+    const url = `${this.apiUrl}/alpha/${termino}`
+    return this.http.get<Country>(url,
+      {
+        params: this.params
+      });
+  }
+
+  buscarRegion(termino: string): Observable<Country[]>{
+    const url = `${this.apiUrl}/regionalbloc/${termino}`
+    return this.http.get<Country[]>(url,
+      {
+        params: this.params
       });
   }
 }
